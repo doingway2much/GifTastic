@@ -8,7 +8,7 @@
     
     $("#buttonAdd").on("click", function() {
         event.preventDefault();
-        var buttonData = $("#userText").val();
+        var buttonData = $("#userText").val().trim();
         $("#buttons").append("<button class='btn btn-secondary gifButton' data='" + buttonData + "'" + ">" + buttonData + "</button>");
         console.log(buttonData);
     })
@@ -31,7 +31,16 @@
               var rating = results[i].rating;
               var p = $("<p>").text("Rating: " + rating);
               var carImage = $("<img>");
-              carImage.attr("src", results[i].images.fixed_height.url);
+              carImage.attr("src", results[i].images.fixed_height_still.url);
+              carImage.attr("data-still", results[i].images.fixed_height_still.url);
+              carImage.attr("data-animate", results[i].images.fixed_height.url);
+              carImage.attr("data-state", "still");
+              carImage.addClass("carImage");
+              console.log(carImage);
+
+
+
+
               gifDiv.append(p);
               gifDiv.append(carImage);
               $("#car-gifs").prepend(gifDiv);
@@ -40,3 +49,19 @@
           }
         });
     });
+
+    // Stops and starts gif animation
+    $(document.body).on("click", ".carImage", function(){
+      var state = $(this).attr("data-state");
+      console.log(state);
+
+      if( state == "still") {
+        $(this).attr("src", $(this).data("animate"));
+        $(this).attr("data-state", "animate");
+
+      }else{
+        $(this).attr('src', $(this).data('still'));
+        $(this).attr('data-state', 'still');
+    }
+
+    })

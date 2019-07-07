@@ -1,5 +1,5 @@
 
-  var cars = ["Tesla", "Ferrari 488", "Range Rover"];
+  var cars = ["Aston Martin Vantage", "McLaren 570S", " Audi R8 V10", "Honda NSX", " Mercedes", " Nissan GT-R", " Maserati", " Range Rover"];
 
     // Genwrate buttons from array
     for( i = 0; i < cars.length; i++) {

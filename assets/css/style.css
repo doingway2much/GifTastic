@@ -1,3 +1,16 @@
+body {
+    background-image: url("https://media.cntraveler.com/photos/584b0c70d73ab3263198d860/master/pass/GettyImages-508632554.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.container {
+    margin-top: 25px;
+    /* background-color: white; */
+    background: rgba(127, 127, 127, 0.6); 
+}
+
 .gifContainer {
     margin: 10px;
     float: left;
@@ -5,4 +18,8 @@
 
 .gifButton {
 margin: 10px;
+}
+
+.userInput {
+    margin-top: 100px;
 }

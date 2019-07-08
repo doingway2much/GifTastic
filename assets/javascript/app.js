@@ -1,8 +1,8 @@
 
-var movies = ["Training Day", "Happy Gilmore", "Armageddon", "Pulp Fiction", " Half Baked", "Grandma's Boy", " Rocky", "The Bourne Identity"];
+var movies = ["Jaws", "Braveheart", "Goodfellas", "Pulp Fiction", "Half Baked", "Star Wars Episode IV", "The Godfather", "The Bourne Identity"];
+var userMovies = [];
 
-// Genwrate buttons from array
-
+// Generate buttons for main array
 for (i = 0; i < movies.length; i++) {  
   var getPoster = function() {
     var queryURL = "https://www.omdbapi.com/?t=" + movies[i] + "&apikey=trilogy";
@@ -11,9 +11,8 @@ for (i = 0; i < movies.length; i++) {
         url: queryURL,
         method: "GET"
       }).then(function(response) {
-        var posterDiv = $("<div class='posterContainer'>");
         $("#buttons").append("<img class='miniPoster' src='" + response.Poster + "'" +  "class='btn btn-dark gifButton' data='" + movietitle + "'" + ">"    + "</button>");
-        console.log(response.Poster);
+        // console.log(response.Poster);
       })
   }
 
@@ -23,24 +22,33 @@ getPoster();
 
 $("#buttonAdd").on("click", function () {
   event.preventDefault();
-  var buttonData = $("#userText").val().trim();
-  movies.push(buttonData);
-  console.log(movies);
-
-  $("#buttons").append("<button class='btn btn-dark gifButton' data='" + buttonData + "'" + ">" + buttonData + "</button>");
-  console.log(buttonData);
+  var buttonData = $("#userText").val();
+  userMovies.push(buttonData);
+  // console.log(userMovies);
+  for (i = 0; i < userMovies.length; i++) {  
+    var getUserPoster = function() {
+    
+      var queryURL = "https://www.omdbapi.com/?t=" + userMovies[i]  + "&apikey=trilogy";
+      var movietitle2 = userMovies[i];
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).then(function(response) {
+          $("#buttons").append("<img class='miniPoster temp-posters' src='" + response.Poster + "'" +  "class='btn btn-dark gifButton' data='" + movietitle2 + "'" + ">"    + "</button>");
+        })}
+        $("#temp").detach();
+        $(".temp-posters").detach();
+        getUserPoster();
+    }
 })
 
 $(document.body).on("click", ".miniPoster", function () {
   var movie = $(this).attr("data");
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=dc6zaTOxFJmzC&limit=10";
-
-
   $.ajax({
     url: queryURL,
     method: "GET"
   })
-
     .then(function (response) {
       var results = response.data;
       for (var i = 0; i < results.length; i++) {
@@ -48,7 +56,7 @@ $(document.body).on("click", ".miniPoster", function () {
           var gifDiv = $("<div class='gifContainer'>");
           var gifTitle = results[i].title;
           var rating = results[i].rating;
-          console.log(gifTitle);
+          // console.log(gifTitle);
           var t = $("<p>").text("Title: " + gifTitle);
           var p = $("<p>").text("Rating: " + rating );
 
@@ -63,7 +71,7 @@ $(document.body).on("click", ".miniPoster", function () {
           gifDiv.append(p);
           gifDiv.append(movieImage);
           $("#movie-gifs").prepend(gifDiv);
-          console.log(response);
+          // console.log(response);
         }
       }
     });
@@ -73,7 +81,7 @@ $(document.body).on("click", ".miniPoster", function () {
 $(document.body).on("click", ".movieImage", function () {
   var state = $(this).attr("data-state");
   var movieSearch = $(this).attr("data");
-  console.log(movieSearch);
+  // console.log(movieSearch);
 
   if (state == "still") {
     $(this).attr("src", $(this).data("animate"));
@@ -87,12 +95,12 @@ $(document.body).on("click", ".movieImage", function () {
 });
 
 
-$(document.body).on("click", "#poster", function () {
+// $(document.body).on("click", "#poster", function () {
     
 
-})
-// var movie = $(this).attr("data");
-var movie = "Training Day";
+// })
+// // var movie = $(this).attr("data");
+// var movie = "Training Day";
         
         
         

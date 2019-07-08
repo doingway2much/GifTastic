@@ -11,10 +11,21 @@ p {
     font-weight: bold;
     
 }
+
+#temp {
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.posters {
+}
 .miniPoster {
-    margin: 10px;
+    margin-top: 25px;
+    margin-left: 25px;
+    /* margin: 10px; */
     width: 115px;
     height: 150px;
+    box-shadow: 0 0 5px red;
 }
 
 .gifContainer {
@@ -35,6 +46,9 @@ p {
 .gifButton {
     margin: 10px;
    
+}
+#buttons {
+
 }
 
 

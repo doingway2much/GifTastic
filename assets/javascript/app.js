@@ -1,21 +1,39 @@
 
-var cars = ["Aston Martin Vantage", "McLaren 570S", " Audi R8 V10", "Honda NSX", " Mercedes", " Nissan GT-R", " Maserati", " Range Rover"];
+var movies = ["Training Day", "Happy Gilmore", "Armageddon", "Pulp Fiction", " Half Baked", "Grandma's Boy", " Rocky", "The Bourne Identity"];
 
 // Genwrate buttons from array
-for (i = 0; i < cars.length; i++) {
-  $("#buttons").append("<button class='btn btn-dark gifButton' data='" + cars[i] + "'" + ">" + cars[i] + "</button>");
+
+for (i = 0; i < movies.length; i++) {  
+  var getPoster = function() {
+    var queryURL = "https://www.omdbapi.com/?t=" + movies[i] + "&apikey=trilogy";
+    var movietitle = movies[i];
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(response) {
+        var posterDiv = $("<div class='posterContainer'>");
+        $("#buttons").append("<img class='miniPoster' src='" + response.Poster + "'" +  "class='btn btn-dark gifButton' data='" + movietitle + "'" + ">"    + "</button>");
+        console.log(response.Poster);
+      })
+  }
+
+  
+getPoster();
 }
 
 $("#buttonAdd").on("click", function () {
   event.preventDefault();
   var buttonData = $("#userText").val().trim();
+  movies.push(buttonData);
+  console.log(movies);
+
   $("#buttons").append("<button class='btn btn-dark gifButton' data='" + buttonData + "'" + ">" + buttonData + "</button>");
   console.log(buttonData);
 })
 
-$(document.body).on("click", ".gifButton", function () {
-  var car = $(this).attr("data");
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + car + "&api_key=dc6zaTOxFJmzC&limit=10";
+$(document.body).on("click", ".miniPoster", function () {
+  var movie = $(this).attr("data");
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=dc6zaTOxFJmzC&limit=10";
 
 
   $.ajax({
@@ -28,18 +46,23 @@ $(document.body).on("click", ".gifButton", function () {
       for (var i = 0; i < results.length; i++) {
         if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
           var gifDiv = $("<div class='gifContainer'>");
+          var gifTitle = results[i].title;
           var rating = results[i].rating;
-          var p = $("<p>").text("Rating: " + rating);
-          var carImage = $("<img>");
-          carImage.attr("src", results[i].images.fixed_height_still.url);
-          carImage.attr("data", car)
-          carImage.attr("data-still", results[i].images.fixed_height_still.url);
-          carImage.attr("data-animate", results[i].images.fixed_height.url);
-          carImage.attr("data-state", "still");
-          carImage.addClass("carImage");
+          console.log(gifTitle);
+          var t = $("<p>").text("Title: " + gifTitle);
+          var p = $("<p>").text("Rating: " + rating );
+
+          var movieImage = $("<img>");
+          movieImage.attr("src", results[i].images.fixed_height_still.url);
+          movieImage.attr("data", movie)
+          movieImage.attr("data-still", results[i].images.fixed_height_still.url);
+          movieImage.attr("data-animate", results[i].images.fixed_height.url);
+          movieImage.attr("data-state", "still");
+          movieImage.addClass("movieImage");
+          gifDiv.append(t);
           gifDiv.append(p);
-          gifDiv.append(carImage);
-          $("#car-gifs").prepend(gifDiv);
+          gifDiv.append(movieImage);
+          $("#movie-gifs").prepend(gifDiv);
           console.log(response);
         }
       }
@@ -47,10 +70,10 @@ $(document.body).on("click", ".gifButton", function () {
 });
 
 // Stops and starts gif animation
-$(document.body).on("click", ".carImage", function () {
+$(document.body).on("click", ".movieImage", function () {
   var state = $(this).attr("data-state");
-  var celebSearch = $(this).attr("data");
-  console.log(celebSearch);
+  var movieSearch = $(this).attr("data");
+  console.log(movieSearch);
 
   if (state == "still") {
     $(this).attr("src", $(this).data("animate"));
@@ -61,41 +84,17 @@ $(document.body).on("click", ".carImage", function () {
     $(this).attr('data-state', 'still');
   }
 
+});
+
+
+$(document.body).on("click", "#poster", function () {
+    
+
 })
+// var movie = $(this).attr("data");
+var movie = "Training Day";
+        
+        
+        
 
-
-var celeb = "cats";
-var api_key = "13114e92c77bf7c8d3481e54d14b633c53dd94ae";
-var request_url = "https://api.imgur.com/3/gallery/search?q=" + celeb;
-
-function requestAlbum() {
-
-  var req = new XMLHttpRequest();
-
-  req.onreadystatechange = function () {
-
-    if (req.readyState == 4 && req.status == 200) {
-
-      processRequest(req.responseText);
-    }
-    else {
-      console.log("Error with Imgur Request");
-    }
-  }
-  req.open("GET", request_url, true); // true for asynchronous     
-  req.setRequestHeader("Authorization", "ced5c744fcbabb2" + api_key);
-  req.send(null);
-}
-function processRequest(response_text) {
-
-  if (response_text == "Not found") {
-    console.log("Imgur album not found.");
-  }
-else {
-
-    var json = JSON.parse(response_text);
-    // You got your response back!
-    // Do your thing here.
-  }
-}
-requestAlbum();
+      

@@ -15,7 +15,6 @@ for (i = 0; i < movies.length; i++) {
         // console.log(response.Poster);
       })
   }
-
   
 getPoster();
 }
@@ -24,17 +23,21 @@ $("#buttonAdd").on("click", function () {
   event.preventDefault();
   var buttonData = $("#userText").val();
   userMovies.push(buttonData);
-  // console.log(userMovies);
+ 
   for (i = 0; i < userMovies.length; i++) {  
     var getUserPoster = function() {
-    
       var queryURL = "https://www.omdbapi.com/?t=" + userMovies[i]  + "&apikey=trilogy";
       var movietitle2 = userMovies[i];
       $.ajax({
           url: queryURL,
           method: "GET"
         }).then(function(response) {
-          $("#buttons").append("<img class='miniPoster temp-posters' src='" + response.Poster + "'" +  "class='btn btn-dark gifButton' data='" + movietitle2 + "'" + ">"    + "</button>");
+          if(response.Poster === undefined){
+            console.log("Opps that doesn't look like a movie");
+          }else {
+            $("#buttons").append("<img class='miniPoster temp-posters' src='" + response.Poster + "'" +  "class='btn btn-dark gifButton' data='" + movietitle2 + "'" + ">"    + "</button>");
+          }
+         
         })}
         $("#temp").detach();
         $(".temp-posters").detach();
@@ -56,10 +59,8 @@ $(document.body).on("click", ".miniPoster", function () {
           var gifDiv = $("<div class='gifContainer'>");
           var gifTitle = results[i].title;
           var rating = results[i].rating;
-          // console.log(gifTitle);
           var t = $("<p>").text("Title: " + gifTitle);
           var p = $("<p>").text("Rating: " + rating );
-
           var movieImage = $("<img>");
           movieImage.attr("src", results[i].images.fixed_height_still.url);
           movieImage.attr("data", movie)
@@ -71,7 +72,6 @@ $(document.body).on("click", ".miniPoster", function () {
           gifDiv.append(p);
           gifDiv.append(movieImage);
           $("#movie-gifs").prepend(gifDiv);
-          // console.log(response);
         }
       }
     });
@@ -81,28 +81,15 @@ $(document.body).on("click", ".miniPoster", function () {
 $(document.body).on("click", ".movieImage", function () {
   var state = $(this).attr("data-state");
   var movieSearch = $(this).attr("data");
-  // console.log(movieSearch);
-
   if (state == "still") {
     $(this).attr("src", $(this).data("animate"));
     $(this).attr("data-state", "animate");
-
   } else {
     $(this).attr('src', $(this).data('still'));
     $(this).attr('data-state', 'still');
   }
-
 });
 
-
-// $(document.body).on("click", "#poster", function () {
-    
-
-// })
-// // var movie = $(this).attr("data");
-// var movie = "Training Day";
-        
-        
         
 
       

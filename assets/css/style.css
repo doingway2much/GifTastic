@@ -1,5 +1,7 @@
 body {
-    background-image: url("https://images.pexels.com/photos/409701/pexels-photo-409701.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+    /* background-image: url("https://s3.amazonaws.com/disneysprings-prod-content/wp-content/uploads/2015/09/18205251/AMC-Exterior-1440x640.jpg"); */
+    background-image: url("https://lalatours.net/wp-content/uploads/2018/05/hollywood-sign-night.jpg");
+
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -25,7 +27,7 @@ p {
     /* margin: 10px; */
     width: 115px;
     height: 150px;
-    box-shadow: 0 0 5px red;
+    box-shadow: 0 0 5px white;
 }
 
 .gifContainer {
@@ -34,7 +36,7 @@ p {
 .container {
     margin-top: 25px;
     /* background-color: white; */
-    background: rgba(63, 53, 53, 0.6); 
+    background: rgba(63, 53, 53, 0.8); 
     box-shadow: 0 0 10px red;
 }
 

@@ -15,7 +15,7 @@ License
 GifTastic
 ***
 
-Copyright (c) 2019 www.doingway2much.com
+Copyright (c) 2019 doingway2much.com
 
 The MIT license (the “License”) set forth below applies to all parts of the GifTastic project. You may not use this file except in compliance with the License. 
 
